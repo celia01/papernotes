@@ -13,26 +13,13 @@ cikm 2019 paper [arxiv](https://arxiv.org/pdf/1904.08030.pdf)
 
 ### 模型图
 主要的大体模型如图
-![](https://raw.githubusercontent.com/celia01/papernotes/master/202009/pic/1.png)
+![](https://raw.githubusercontent.com/celia01/papernotes/master/202008/pic/1.png)
 中间收集feature向量，没有直接使用concat或attention聚合成1个向量，而是使用的capsule，变成多个向量。
-因为最后会有
-
-
-
-### Bloom Embedding
-x是一个d为的one-hot向量，$x=[x_1, ..., x_d], x_i\in\{0,1\} $，实际上非零元素集合为 $p=\{p_i\}_{i=1}^c, p_i\in N_{\le d}$，c是非零元素的个数，数量远远小于d，  
-最后需要映射到 $u=[u_1,...,u_m], u_i\in \{0,1\}$  
-有k个相互独立的hash函数 $H_j, j=1,...,k$，设置 $u_{H_j(p_i)}=1$
-
-
-
-### 具体实现
-
-  
-###  pairwise方式
-
-
-### 其他讨论
+因为最后会有多个向量，最后会把label和多个聚类向量，做attention，求加权和，最为用户最终向量。  
+用户向量 $\overrightarrow {v}_i^k$  
+用户向量组 $V_u=(\overrightarrow {v}_u^1, ..., \overrightarrow {v}_u^K)$, K是聚类capsule的维度
+item向量，item就是label，$\overrightarrow {e}_i$  
+线上求topN时，对用户 u 和物品 i 打分，$f_{score}(V_u, \overrightarrow {e}_i)=\max \limits_{1\le k \le K} \overrightarrow {e}_i^T, \overrightarrow {v}_u^k,$，即求一个最大的得分
 
 
 
@@ -40,9 +27,8 @@ x是一个d为的one-hot向量，$x=[x_1, ..., x_d], x_i\in\{0,1\} $，实际上
 
 
 ## Other
-[code](https://github.com/geek-ai/irgan)
-
-[只用生成器能否打败IRGAN? 读完Code再读论文的一些体会](https://medium.com/@yaoyaowd/%E5%8F%AA%E7%94%A8%E7%94%9F%E6%88%90%E5%99%A8%E8%83%BD%E5%90%A6%E6%89%93%E8%B4%A5irgan-%E8%AF%BB%E5%AE%8Ccode%E5%86%8D%E8%AF%BB%E8%AE%BA%E6%96%87%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A-4b3f7c29b477)
+<!--[code](https://github.com/geek-ai/irgan)-->
+[论文翻译](http://d0evi1.com/mind/)
 
 
 

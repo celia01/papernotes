@@ -12,14 +12,24 @@ cikm 2019 paper [arxiv](https://arxiv.org/pdf/1904.08030.pdf)
 ## Note
 
 ### 模型图
-主要的大体模型如图
+这是阿里天猫推荐部门，提出的模型，主要的大体模型如图
 ![](https://raw.githubusercontent.com/celia01/papernotes/master/202008/pic/1.png)
 中间收集feature向量，没有直接使用concat或attention聚合成1个向量，而是使用的capsule，变成多个向量。
 因为最后会有多个向量，最后会把label和多个聚类向量，做attention，求加权和，最为用户最终向量。  
+这里的label-aware attention有一点类似din中的attention，同时需要user和item侧的输入
 用户向量 $\overrightarrow {v}_i^k$  
 用户向量组 $V_u=(\overrightarrow {v}_u^1, ..., \overrightarrow {v}_u^K)$, K是聚类capsule的维度
 item向量，item就是label，$\overrightarrow {e}_i$  
 线上求topN时，对用户 u 和物品 i 打分，$f_{score}(V_u, \overrightarrow {e}_i)=\max \limits_{1\le k \le K} \overrightarrow {e}_i^T, \overrightarrow {v}_u^k,$，即求一个最大的得分
+
+### 效果对比
+最后模型对比的baseline算法： 
+WALS  
+YouTube DNN  
+MaxMF  
+对比的指标：  
+HR@10，HR@50，HR@100  
+还有具体线上实验时，与线上ctr的对比
 
 
 
